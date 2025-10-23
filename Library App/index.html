@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Web font example</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+  </head>
+<body>
+
+  <button id="button-add-book">Add book</button>
+  <dialog id="dialog-form">
+    <form method='post' id="form-add-book">
+      <label for="input-author">
+        Author:
+        <input type="text" id='input-author' name="author" required>
+      </label>
+      <label for="input-title">
+        Title:
+        <input type="text" id='input-title' name="title" required>
+      </label>
+      <label for="input-pages">
+        Pages:
+        <input type="number" id='input-pages' name="pages" min='1' required>
+      </label>
+      <label for="select-read">
+        Read:
+        <select id="select-read" name="read" required>
+          <option disabled selected value="">Choose...</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+      <div>
+        <button id="button-submit">Submit</button>
+        <button type="button" id="button-close">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <button id="button-display-books">Display books</button>
+
+  <table id="table-books">
+    <caption>Books</caption>
+    <thead>
+      <tr>
+        <th scope="col">Author</th>
+        <th scope="col">Title</th>
+        <th scope="col">Pages</th>
+        <th scope="col">Read</th>
+      </tr>
+    </thead>
+    <tbody id="tbody-books">
+    </tbody>
+  </table>
+
+  <script src="script.js">
+    
+  </script>
+</body>
+</html>
