@@ -127,13 +127,13 @@ function updateProjectDisplay(todo) {
         document.querySelector(`[data-id="${todo.id}"]`).remove();
     })
 
-    expandBtn.addEventListener('click', e => toggleDesc(e));
+    expandBtn.addEventListener('click', () => toggleDesc(todoDesc));
 
     return li;
 }
 
-function toggleDesc(e) {
-    e.target.hidden = !e.target.hidden
+function toggleDesc(div) {
+    div.hidden = !div.hidden;
 }
 
 function deleteTodo(todo) {

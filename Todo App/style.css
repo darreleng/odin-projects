@@ -1,0 +1,90 @@
+body {
+    background-color: blanchedalmond;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container-todo-project {
+    background-color: rgb(146, 147, 148);
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.container-todo-item {
+    display:flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    padding-left: 4px;
+    /* height: 50px; */
+    background-color: rgb(233, 233, 233);
+}
+
+.container-todo-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-todo-item-supplementary {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 64px; 
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.219);
+}
+
+.container-todo-content {
+    font-size: 1.2rem;
+    display: flex;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.checkbox-todo:checked ~ .title-todo {
+    text-decoration: line-through; 
+    opacity: 0.6; 
+}
+
+.container-todo-actions {
+    /* Enable Flexbox */
+    display: flex;
+    gap: 5px; 
+}
+
+button {
+    border-radius: 0;
+    border: 1px solid black;
+    aspect-ratio: 1;
+    cursor: pointer;
+    height: 40px;
+}
+
+.edit-todo {
+    background-color: rgb(89, 155, 255);
+}
+
+.delete-todo {
+    background-color: rgb(255, 80, 27);
+}
+
+.expand-todo {
+    background-color: honeydew;
+}
+
+.todo-projects {
+    outline: none;
+    margin: 0px auto;
+    display: flex;
+}
+
+select {
+    font-size: 1.5rem;
+    outline: none;
+}
