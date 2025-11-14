@@ -1,9 +1,7 @@
 import { Gameboard } from "./gameboard";
 import { Ship } from "./ship";
 
-const name = "Submarine";
-const length = 3;
-const ship = new Ship(name, length);
+const ship = new Ship("Submarine", 3);
 let gameboard;
 beforeEach(() => gameboard = new Gameboard);
 
@@ -23,6 +21,18 @@ describe('placeShip method', () => {
         const actual = gameboard.placeShip(2, 4, ship, false);
         expect(actual).toBe("Invalid placement: overlaps with one or more ships.");
     })
+
+    test("Should be able to place on empty cells", () => {
+        const actual = gameboard.placeShip(3, 3, ship, false);
+        expect(actual).toBe(`${ship.name} placed.`);
+    })
+    
+    test("Placed ships should contain an array of coordinates", () => {
+        const ship = new Ship("Submarine", 3);
+        gameboard.placeShip(4, 5, ship, false);
+        const actual = ship.coord;
+        expect(actual).toEqual([[4, 5], [5, 5], [6, 5]]);
+    })
 })
 
 describe("receiveAttack method", () => {
@@ -40,37 +50,37 @@ describe("receiveAttack method", () => {
     let y = 5;
 
     test("Should be unable to target coordinates that have already been fired at", () => {
-        gameboard.receiveAttack(x, y);
-        const actual = gameboard.receiveAttack(x, y);
+        gameboard.receiveAttack(y, x);
+        const actual = gameboard.receiveAttack(y, x);
         expect(actual).toBe("Already fired.");
     })
 
     test("Should record a miss", () => {
-        const actual = gameboard.receiveAttack(x, y);
+        const actual = gameboard.receiveAttack(y, x);
         expect(actual).toBe("Miss.");
-        expect(gameboard.grid[x][y]).toBe("M");
+        expect(gameboard.grid[y][x]).toBe("M");
     })
 
     test("Should be able to target coordinates with a ship", () => {
-        gameboard.placeShip(x, y, ship, true);
-        const actual = gameboard.receiveAttack(x, y);
+        gameboard.placeShip(y, x, ship, true);
+        const actual = gameboard.receiveAttack(y, x);
         expect(actual).toBe("Hit!");
-        expect(gameboard.grid[x][y].hit).toBe(true);
+        expect(gameboard.grid[y][x].hit).toBe(true);
     })
 
     test("Should be able to sink ships when the last segment is hit", () => {
-        gameboard.placeShip(x, y, ship, true);
-        gameboard.receiveAttack(x, y);
-        gameboard.receiveAttack(x, y + 1);
-        const actual = gameboard.receiveAttack(x, y + 2);
+        gameboard.placeShip(y, x, ship, true);
+        gameboard.receiveAttack(y, x);
+        gameboard.receiveAttack(y, x + 1);
+        const actual = gameboard.receiveAttack(y, x + 2);
         expect(actual).toBe("Hit and Sunk!");
     })  
 
     test("Should be able to check if all ships on the board have been sunk", () => {
-        gameboard.placeShip(x, y, ship, true);
-        gameboard.receiveAttack(x, y);
-        gameboard.receiveAttack(x, y + 1); 
-        gameboard.receiveAttack(x, y + 2); 
+        gameboard.placeShip(y, x, ship, true);
+        gameboard.receiveAttack(y, x);
+        gameboard.receiveAttack(y, x + 1); 
+        gameboard.receiveAttack(y, x + 2); 
         const actual = gameboard.checkAllShipsSunk();
         expect(actual).toBe(true);
     })

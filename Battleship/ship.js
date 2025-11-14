@@ -4,6 +4,7 @@ class Ship {
         this.length = length;
         this.hits = new Array(length).fill(false);
         this.sunk = false;
+        this.coord = [];
     }
 
     hit(segmentIndex) {
