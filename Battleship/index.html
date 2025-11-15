@@ -8,13 +8,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="computer-board" id="computer-board">
+    <div class="board-wrapper">
+        <div class="player-board-wrapper">
+            <h2 class="player-board-title" id="player-board-title">Your Board</h2>
+            <div class="player-board" id="player-board"></div>
+            <div class="player-board-cell-label"></div>
+        </div>
+        <div class="computer-board-wrapper">
+            <h2 class="computer-board-title" id="computer-board-title">Computer Board</h2>
+            <div class="computer-board" id="computer-board"></div>
+            <div class="computer-board-cell-label">
+        </div>
+    </div>
 
+    <div class="bottom-ui">  
+        <div class="game-controls">
+            <button class="start-button">Start</button>
+            <button class="restart-button" disabled>Restart</button>
+            <button id="randomise-button">Randomise</button>
+        </div>
+        <div class="display-message-box">
+
+        </div>
     </div>
-    <div class="player-board-wrapper">
-        <h2 class="player-board-title" id="player-board-title">Your Board</h2>
-        <div class="player-board" id="player-board"></div>
-        <div class="cell-label"></div>
-    </div>
+    
 </body>
 </html>
