@@ -1,0 +1,8 @@
+.gameboard-sixteen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 24px;
+    padding: 24px;
+    background-color: rgb(253, 175, 175);
+}

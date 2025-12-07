@@ -1,0 +1,47 @@
+.card {
+    width: 150px;
+    aspect-ratio: .714;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    border-radius: 16px;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; 
+    transition: transform 0.35s ease-in;
+    border: none;
+}
+
+.card-front {
+    transform: rotateY(-180deg);
+}
+
+.card.flipped .card-front {
+    transform: rotateY(0deg);
+}
+
+.card.flipped .card-back {
+    transform: rotateY(180deg);
+}
+
+.card-front {
+    object-fit: contain;
+    background-color: white;
+}
+
+.card-back {
+    background-color: steelblue;
+}
+
+.card-back:hover {
+    background-color: hsl(207, 44%, 60%);
+}
+
+.card-back:active {
+    background-color: hsl(207, 44%, 42%);
+}
+

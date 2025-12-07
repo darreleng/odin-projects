@@ -1,0 +1,9 @@
+.deck-size-selector-wrapper {
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  font-size: 2rem;
+  padding: 12px;
+}
