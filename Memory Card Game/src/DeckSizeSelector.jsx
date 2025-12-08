@@ -6,7 +6,7 @@ export default function DeckSizeSelector({ onClick }) {
     return (
         <div className="deck-size-selector-wrapper">
             {deckSizes.map(deck => 
-                <button className={deck.class} key={deck.cards} onClick={() => onClick(deck.cards, deck.class)}>{deck.cards}</button>
+                <button className={deck.btnClass} key={deck.cards} onClick={() => onClick(deck.cards, deck.gameboardClass)}>{deck.cards}</button>
             )}
         </div>
     )

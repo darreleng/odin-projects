@@ -1,6 +1,6 @@
 import Card from "./Card";
 import './CardDeck.css';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 function getIds(numberOfCards) {
     const uniqueSet = new Set();
@@ -34,11 +34,15 @@ async function fetchSprites(ids) {
    return settledResults.map(result => result.value);
 }
 
-export default function CardDeck({ numberOfCards, gameboardClass, handleTurn }) {
+export default function CardDeck({ numberOfCards, gameboardClass, handleTurn, checkGameComplete }) {
     const [cardDeck, setCardDeck] = useState([]);
     const [choiceOne, setChoiceOne] = useState(null);
     const [choiceTwo, setChoiceTwo] = useState(null);
     const [disabled, setDisabled] = useState(false);
+    
+    const ids = useMemo(() => {
+        return getIds(numberOfCards);
+    }, [numberOfCards]);
 
     useEffect(() => {
         async function loadDeck() {
@@ -49,9 +53,7 @@ export default function CardDeck({ numberOfCards, gameboardClass, handleTurn }) 
             ])));
         }
         loadDeck();
-    }, []);
-
-    const ids = getIds(numberOfCards);
+    }, [ids]);
 
     function handleChoice(card) {
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
@@ -60,15 +62,21 @@ export default function CardDeck({ numberOfCards, gameboardClass, handleTurn }) 
     useEffect(() => {
         if (choiceOne && choiceTwo) {
             setDisabled(true);
-            if (choiceOne.id === choiceTwo.id) {
-                setCardDeck(prevCards => prevCards.map(card => card.id === choiceOne.id ? {...card, matched: true} : card)
-                )
+            handleTurn();
+
+            if (choiceOne.id === choiceTwo.id) setCardDeck(prevCards => {
+                const newDeck = prevCards.map(card => card.id === choiceOne.id ? {...card, matched: true} : card);
+
+                if (newDeck.every(card => card.matched)) checkGameComplete();
+
+                return newDeck;
             }
+            )
+            
             setTimeout(() => {
                 resetChoices();
-                handleTurn();
                 setDisabled(false);
-            }, 600);
+            }, 500);
         }
     }, [choiceTwo]);
 
@@ -76,6 +84,7 @@ export default function CardDeck({ numberOfCards, gameboardClass, handleTurn }) 
         setChoiceOne(null);
         setChoiceTwo(null);
     }
+
 
     return (
         <div className={gameboardClass}>
@@ -85,3 +94,4 @@ export default function CardDeck({ numberOfCards, gameboardClass, handleTurn }) 
         </div>
     )
 }
+

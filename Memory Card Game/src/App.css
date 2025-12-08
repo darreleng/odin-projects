@@ -17,3 +17,7 @@
   width: 1200px;
 }
 
+.score-wrapper {
+  display: flex;
+  gap: 24px;
+}
