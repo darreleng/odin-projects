@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Message Board</title></head>
+<body>
+    <h1>Message Board</h1>
+    <ul>
+        <% messages.forEach(message => { %>
+        <div class="message-card" style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+            <h3><%= message.user %></h3>
+            <p><%= message.text %></p>
+            <small>Sent on: <%= message.added.toDateString() %></small>
+        </div>
+<% }); %>
+    </ul>
+    <a href="/new">Submit a message</a>
+</body>
+</html>
