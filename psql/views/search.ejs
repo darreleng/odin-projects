@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search username</title>
+</head>
+<body>
+    <h1>Search username</h1>
+    <form action="/search" method="get">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username">
+        <button>Search</button>
+    </form>
+    
+    <% if (locals.searched) { %>
+        <h2>Results:</h2>
+
+        <% if (user) { %>
+            <p><strong>Found:</strong> <%= user.username %></p>
+        <% } else { %>
+            <p style="color: red;">No user found with that name.</p>
+        <% } %>
+    <% } %>
+
+</body>
+</html>
