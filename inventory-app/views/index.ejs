@@ -33,7 +33,9 @@
                         </form>
                     </td>
                     <td>
-                        <form action="/delet" method="post">
+                        <form action="/deleteItem" method="post">
+                            <input type="hidden" name="category" value="<%= currentCategory %>">
+                            <input type="hidden" name="itemId" value="<%= item.id %>">
                             <button>Delete</button>
                         </form>
                     </td>
@@ -43,9 +45,27 @@
         <tfoot>
             <tr>
                 <td colspan="3">
-                    <form action="/add" method="post">
-                        <button style="width: 100%">Add</button>
-                    </form>
+                    <button id="showDialog">Add New Item</button>
+                    <dialog id="itemDialog">
+                        <div class="dialog-header">
+                            <h2>Add New Item</h2>
+                            <button id="closeDialog" type="button">&times;</button>
+                        </div>
+
+                        <form action="/addItem" method="POST">
+                            <input type="text" name="name" placeholder="Item Name" required>
+                            <input type="number" name="quantity" placeholder="Quantity" required>
+                            <input type="number" name="price" step="0.01" placeholder="Price" required>
+                            
+                            <select name="category">
+                                <% categories.forEach(obj => { %>
+                                    <option value="<%= obj.category %>"><%= obj.category %></option>
+                                <% }) %>
+                            </select>
+                            
+                            <button type="submit">Add Item</button>
+                        </form>
+                    </dialog>
                 </td>
             </tr>
         </tfoot>
@@ -56,5 +76,23 @@
             <p>Please select a category from the menu to view items.</p>
         </div>
     <% } %>
+
+    <script>
+        const dialog = document.getElementById("itemDialog");
+        const showBtn = document.getElementById("showDialog");
+        const closeBtn = document.getElementById("closeDialog");
+
+        showBtn.addEventListener("click", () => {
+            dialog.showModal();
+        });
+
+        closeBtn.addEventListener("click", () => {
+            dialog.close();
+        });
+
+        dialog.addEventListener("click", (e) => {
+            if (e.target === dialog) dialog.close();
+        });
+    </script>
 </body>
 </html>
