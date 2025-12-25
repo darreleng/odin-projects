@@ -28,11 +28,6 @@
                     <td><%= item.quantity %></td>
                     <td>$<%= item.price %></td>
                     <td>
-                        <form action="/edit" method="post">
-                            <button>Edit</button>
-                        </form>
-                    </td>
-                    <td>
                         <form action="/deleteItem" method="post">
                             <input type="hidden" name="category" value="<%= currentCategory %>">
                             <input type="hidden" name="itemId" value="<%= item.id %>">
