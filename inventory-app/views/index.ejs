@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory App</title>
+</head>
+<body>
+    <h1>Current Inventory</h1>
+    <ul>
+        <li><a href="/category/all">All</a></li>
+        <% categories.forEach(obj => { %>
+            <li><a href="/category/<%= obj.category.toLowerCase() %>"><%= obj.category %></a><button>Delete</button></li>
+        <% }) %>
+    </ul>
+    <% if (items.length !== 0) { %>
+    <table>
+        <caption><%= currentCategory %></caption>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% items.forEach(item => { %>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td><%= item.quantity %></td>
+                    <td>$<%= item.price %></td>
+                    <td>
+                        <form action="/edit" method="post">
+                            <button>Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/delet" method="post">
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <form action="/add" method="post">
+                        <button style="width: 100%">Add</button>
+                    </form>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <% } else { %>
+        <div class="welcome-message">
+            <h2>Welcome to the Inventory Manager</h1>
+            <p>Please select a category from the menu to view items.</p>
+        </div>
+    <% } %>
+</body>
+</html>
