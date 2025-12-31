@@ -7,12 +7,18 @@ exports.createPost = async (title, content, authorId) => {
 }
 
 exports.getAllPosts = async () => {
-    const { rows } = await db.query('SELECT * FROM posts ORDER BY created_at DESC');
+    const { rows } = await db.query('SELECT * FROM posts WHERE deleted_at IS NULL ORDER BY created_at DESC');
     return rows;
 };
 
-exports.getBySlug = async (slug) => {
-    const query = `SELECT * FROM posts WHERE slug = $1`;
-    const { rows } = await db.query(query, [slug]);
-    return rows[0];
+exports.getPost = async (identifier) => {
+    const query = 'SELECT * FROM posts WHERE deleted_at IS NULL AND (id::text = $1 OR title = $1)';
+    const { rows } = await db.query(query, [identifier]);
+    return rows;
 };
+
+exports.softDeletePost = async (identifier) => {
+    const query = 'UPDATE posts SET deleted_at = CURRENT_TIMESTAMP WHERE id = (SELECT id FROM posts WHERE (id::text = $1 OR title = $1) AND deleted_at IS NULL ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
+    const { rows } = await db.query(query, [identifier]);
+    return rows;
+}

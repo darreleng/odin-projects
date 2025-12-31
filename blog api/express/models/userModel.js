@@ -7,8 +7,8 @@ exports.createUser = async (username, password) => {
 }
 
 exports.getUser = async (identifier) => {
-    const query = 'SELECT * FROM users WHERE deleted_at IS NULL AND (id::text = $1 OR username = $2) ORDER BY (id::text = $1) DESC LIMIT 1';
-    const { rows } = await db.query(query, [identifier, identifier]);
+    const query = 'SELECT * FROM users WHERE deleted_at IS NULL AND (id::text = $1 OR username = $1) ORDER BY (id::text = $1) DESC LIMIT 1';
+    const { rows } = await db.query(query, [identifier]);
     return rows;
 }
 
@@ -18,9 +18,9 @@ exports.getAllUsers = async () => {
 }
 
 exports.softDeleteUser = async (identifier) => {
-    // const query = 'DELETE FROM users WHERE id = (SELECT id FROM users WHERE id::text = $1 OR username = $2 ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
-    const query = 'UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = (SELECT id FROM users WHERE id::text = $1 OR username = $2 ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
-    const { rows } = await db.query(query, [identifier, identifier]);
+    // const query = 'DELETE FROM users WHERE id = (SELECT id FROM users WHERE id::text = $1 OR username = $1 ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
+    const query = 'UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = (SELECT id FROM users WHERE id::text = $1 OR username = $1 ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
+    const { rows } = await db.query(query, [identifier]);
     return rows;
 }
 

@@ -1,43 +1,52 @@
 const Post = require('../models/postModel');
 
 exports.getAllPosts = async (req, res) => {
-    const posts = await Post.getAllPosts();
-    res.status(200).json({ message: "Fetching all posts..." });
-};
-
-exports.getPostById = (req, res) => {
-    res.status(200).json({ message: `Fetching post id ${req.params.id}` });
-}
-
-exports.getPostBySlug = async (req, res) => {
-    const post = await Post.getBySlug(req.params.slug);
-    
-    if (!post) {
-        return res.status(404).json({ message: "Post not found" });
+    try {
+        const posts = await Post.getAllPosts();
+        if (posts.length === 0) return res.status(200).json({ message: "There are currently no posts."});
+        res.status(200).json(posts);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Failed to load posts.' });
     }
-
-    // This is your "View" logic now:
-    res.status(200).json({
-        status: "success",
-        data: post
-    });
 };
+
+exports.getPost = async (req, res) => {
+    const { identifier } = req.params;
+    try {
+        const rows = await Post.getPost(identifier);
+        if (rows.length === 0) return res.status(500).json({ message: `Post ${identifier} does not exist.` });
+        const post = rows[0];
+        res.status(200).json(post);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: `Failed to load post ${identifier}` });
+    }
+}
 
 exports.createPost = async (req, res) => {
     try {
-        console.log("Data received from Postman:", req.body);
         const post = await Post.createPost(req.body.title, req.body.content, req.body.authorId);
         res.status(201).json(post);
-    } catch (err) {
-        console.error("DATABASE ERROR:", err.message);
-        res.status(500).json({ error: "Failed to save post" });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: "Failed to save post." });
     }
 };
 
-exports.updatePost = (req, res) => {
-    res.status(200).json({ message: `Post ${req.params.id} updated!` })
-}
-
-exports.deletePost = (req, res) => {
-    res.status(200).json({ message: `Deleted post ${req.params.id}` });
+exports.softDeletePost = async (req, res) => {
+    const { identifier } = req.params;
+    try {
+        const rows = await Post.softDeletePost(identifier);
+        if (rows.length === 0) return res.status(500).json({ message: `Post ${identifier} does not exist.` });
+        const post = rows[0];
+        res.status(404).json(post);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: `Failed to delete post ${identifier}` });
+    }
 };
+
+// exports.updatePost = (req, res) => {
+//     res.status(200).json({ message: `Post ${req.params.id} updated!` })
+// }
