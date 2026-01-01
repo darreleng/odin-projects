@@ -13,7 +13,7 @@ exports.getUser = async (identifier) => {
 }
 
 exports.getAllUsers = async () => {
-    const { rows } = await db.query('SELECT * FROM users WHERE deleted_at IS NULL');
+    const { rows } = await db.query('SELECT id, username FROM users WHERE deleted_at IS NULL');
     return rows;
 }
 

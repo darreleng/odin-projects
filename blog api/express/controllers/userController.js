@@ -15,8 +15,7 @@ exports.getUser = async (req, res) => {
     try {
         const user = await User.getUser(identifier);
         if (!user) return res.status(404).json({ message: `User ${identifier} not found.` });
-        console.log(user.password);
-        res.status(200).json(user);
+        res.status(200).json(user.username);
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ error: `Failed to find user ${identifier}`})
