@@ -11,6 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser()); 
 
+const cors = require('cors');
+
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    credentials: true
+}));
+
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/comments', commentRoutes);
