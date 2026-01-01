@@ -22,3 +22,9 @@ exports.softDeletePostById = async (post_id) => {
     const { rows } = await db.query(query, [post_id]);
     return rows[0];
 }
+
+exports.updatePostById = async (content, post_id) => {
+    const query = 'UPDATE posts SET edited_at = CURRENT_TIMESTAMP, content = $1 WHERE id::text = $2 RETURNING *';
+    const { rows } = await db.query(query, [content, post_id]);
+    return rows[0];
+}
