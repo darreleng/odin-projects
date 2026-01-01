@@ -1,9 +1,3 @@
-// const path = require('node:path');
-
-// app.use(express.urlencoded({ extended: true }));
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
-
 const express = require('express');
 const cookieParser = require('cookie-parser');
 

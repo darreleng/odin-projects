@@ -12,11 +12,10 @@ exports.getAllComments = async (req, res) => {
 };
 
 exports.getComment = async (req, res) => {
-    const { identifier } = req.params;
+    const comment_id = req.params.id;
     try {
-        const rows = await Comment.getComment(identifier);
-        if (rows.length === 0) return res.status(404).json({ message: `comment ${identifier} does not exist.` });
-        const comment = rows[0];
+        const comment = await Comment.getComment(comment_id);
+        if (!comment) return res.status(404).json({ message: `comment ${identifier} does not exist.` });
         res.status(200).json(comment);
     } catch (error) {
         console.error(error.message);
@@ -36,11 +35,10 @@ exports.createComment = async (req, res) => {
 };
 
 exports.softDeleteComment = async (req, res) => {
-    const { identifier } = req.params;
+    const comment_id = req.params.id;
     try {
-        const rows = await Comment.softDeleteComment(identifier);
-        if (rows.length === 0) return res.status(404).json({ message: `comment ${identifier} does not exist.` });
-        const comment = rows[0];
+        const comment = await Comment.softDeleteComment(comment_id);
+        if (!comment) return res.status(404).json({ message: `comment ${identifier} does not exist.` });
         res.status(200).json(comment);
     } catch (error) {
         console.error(error.message);

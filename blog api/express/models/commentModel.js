@@ -11,14 +11,14 @@ exports.getAllComments = async () => {
     return rows;
 };
 
-exports.getComment = async (identifier) => {
+exports.getComment = async (comment_id) => {
     const query = 'SELECT * FROM comments WHERE deleted_at IS NULL AND id::text = $1';
-    const { rows } = await db.query(query, [identifier]);
-    return rows;
+    const { rows } = await db.query(query, [comment_id]);
+    return rows[0];
 };
 
-exports.softDeleteComment = async (identifier) => {
+exports.softDeleteComment = async (comment_id) => {
     const query = 'UPDATE comments SET deleted_at = CURRENT_TIMESTAMP WHERE id = $1 AND deleted_at IS NULL RETURNING *';
-    const { rows } = await db.query(query, [identifier]);
-    return rows;
+    const { rows } = await db.query(query, [comment_id]);
+    return rows[0];
 }
