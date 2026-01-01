@@ -1,15 +1,15 @@
 const db = require('../db/pool');
 
-exports.createUser = async (username, password) => {
+exports.createUser = async (username, hashedPassword) => {
     const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *';
-    const { rows } = await db.query(query, [username, password]);
+    const { rows } = await db.query(query, [username, hashedPassword]);
     return rows[0];
 }
 
 exports.getUser = async (identifier) => {
     const query = 'SELECT * FROM users WHERE deleted_at IS NULL AND (id::text = $1 OR username = $1) ORDER BY (id::text = $1) DESC LIMIT 1';
     const { rows } = await db.query(query, [identifier]);
-    return rows;
+    return rows[0];
 }
 
 exports.getAllUsers = async () => {

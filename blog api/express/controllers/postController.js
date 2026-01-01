@@ -26,7 +26,7 @@ exports.getPost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
     try {
-        const post = await Post.createPost(req.body.title, req.body.content, req.body.authorId);
+        const post = await Post.createPost(req.body.title, req.body.content, req.user.id);
         res.status(201).json(post);
     } catch (error) {
         console.error(error.message);
