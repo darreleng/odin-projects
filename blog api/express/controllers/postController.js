@@ -11,16 +11,15 @@ exports.getAllPosts = async (req, res) => {
     }
 };
 
-exports.getPost = async (req, res) => {
-    const { identifier } = req.params;
+exports.getPostById = async (req, res) => {
+    const post_id = req.params.id;
     try {
-        const rows = await Post.getPost(identifier);
-        if (rows.length === 0) return res.status(404).json({ message: `Post ${identifier} does not exist.` });
-        const post = rows[0];
+        const post = await Post.getPostById(post_id);
+        if (!post) return res.status(404).json({ message: `Post ${post_id} does not exist.` });
         res.status(200).json(post);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ message: `Failed to load post ${identifier}` });
+        res.status(500).json({ message: `Failed to load post ${post_id}` });
     }
 }
 
@@ -34,16 +33,18 @@ exports.createPost = async (req, res) => {
     }
 };
 
-exports.softDeletePost = async (req, res) => {
-    const { identifier } = req.params;
+exports.softDeletePostById = async (req, res) => {
+    const post_id = req.params.id;
+    const user_id = req.user.id;
     try {
-        const rows = await Post.softDeletePost(identifier);
-        if (rows.length === 0) return res.status(400).json({ message: `Post ${identifier} does not exist.` });
-        const post = rows[0];
-        res.status(200).json(post);
+        const post = await Post.getPostById(post_id);
+        if (!post) return res.status(404).json({ error: `Post ${post_id} does not exist.` });
+        if (post.author_id !== user_id) return res.status(403).json({ error: "Unauthorized: You can only delete your own posts" });
+        await Post.softDeletePostById(post_id);
+        res.status(200).json({ message: "Post deleted successfully" });
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ message: `Failed to delete post ${identifier}` });
+        res.status(500).json({ message: `Failed to delete post ${post_id}` });
     }
 };
 

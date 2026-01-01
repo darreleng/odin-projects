@@ -11,14 +11,14 @@ exports.getAllPosts = async () => {
     return rows;
 };
 
-exports.getPost = async (identifier) => {
-    const query = 'SELECT * FROM posts WHERE deleted_at IS NULL AND (id::text = $1 OR title = $1)';
-    const { rows } = await db.query(query, [identifier]);
-    return rows;
+exports.getPostById = async (post_id) => {
+    const query = 'SELECT * FROM posts WHERE deleted_at IS NULL AND id::text = $1';
+    const { rows } = await db.query(query, [post_id]);
+    return rows[0];
 };
 
-exports.softDeletePost = async (identifier) => {
-    const query = 'UPDATE posts SET deleted_at = CURRENT_TIMESTAMP WHERE id = (SELECT id FROM posts WHERE (id::text = $1 OR title = $1) AND deleted_at IS NULL ORDER BY (id::text = $1) DESC LIMIT 1) RETURNING *';
-    const { rows } = await db.query(query, [identifier]);
-    return rows;
+exports.softDeletePostById = async (post_id) => {
+    const query = 'UPDATE posts SET deleted_at = CURRENT_TIMESTAMP WHERE id::text = $1 AND deleted_at IS NULL RETURNING *';
+    const { rows } = await db.query(query, [post_id]);
+    return rows[0];
 }
