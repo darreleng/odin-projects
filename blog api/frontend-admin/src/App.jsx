@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router'
+import Navbar from './Navbar'
 
 export default function App() {
 
   return (
-    <div className='container'>
+    <main className='container'>
+      <Navbar />
       <Outlet />
-    </div>
+    </main>
   )
 }
 

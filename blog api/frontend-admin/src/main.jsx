@@ -3,16 +3,22 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import './index.css'
 import App from './App.jsx'
-import Posts from './Posts.jsx'
+import Posts, { loader as postsLoader } from './Posts.jsx'
 import Signup from './Signup.jsx'
+import PostPage from './PostPage.jsx';
+import NotFound from '../NotFound.jsx';
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: App,
     children: [
-      { index: true, Component: Posts },
-      { path: "signup", Component: Signup }
+      { index: true, Component: Posts, loader: postsLoader },
+      { path: "signup", Component: Signup },
+      { path: "posts", Component: Posts, loader: postsLoader },
+      { path: "posts/:id", Component: PostPage},
+      { path: "*", Component: NotFound }
     ]
   }
 ]);

@@ -1,11 +1,12 @@
 :root {
   --primary-color: #242424;
+  --secondary-color: #ffffffde;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--secondary-color);
   background-color: var(--primary-color);
 
   font-synthesis: none;
@@ -33,8 +34,26 @@
   box-sizing: border-box;
 }
 
+.navbar {
+  background-color: var(--secondary-color);
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+}
+
+.nav-links a.active {
+  color: #323acc;
+  border-bottom: 2px solid #323acc;
+}
+
 .post{
-  background-color: hsla(0, 0%, 100%, 0.8);
+  background-color: var(--secondary-color);
   color: var(--primary-color);
   border-radius: 12px;
   list-style: none;
@@ -69,6 +88,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
