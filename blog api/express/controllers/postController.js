@@ -3,7 +3,6 @@ const Post = require('../models/postModel');
 exports.getAllPosts = async (req, res) => {
     try {
         const posts = await Post.getAllPosts();
-        if (posts.length === 0) return res.status(200).json({ message: "There are currently no posts."});
         res.status(200).json(posts);
     } catch (error) {
         console.error(error.message);

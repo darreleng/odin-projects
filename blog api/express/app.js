@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -10,8 +11,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser()); 
-
-const cors = require('cors');
 
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001'],
