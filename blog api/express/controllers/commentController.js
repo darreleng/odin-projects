@@ -1,18 +1,30 @@
 const Comment = require('../models/commentModel');
 
 exports.getAllComments = async (req, res) => {
+    const { postId } = req.params; 
+
     try {
-        const comments = await Comment.getAllComments();
-        if (comments.length === 0) return res.status(200).json({ message: "There are currently no comments."});
+        let comments;
+
+        if (postId) {
+            comments = await Comment.getByPostId(postId);
+        } else {
+            comments = await Comment.getAll();
+        }
+
+        if (comments.length === 0) {
+            return res.status(200).json([]); 
+        }
+
         res.status(200).json(comments);
     } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ message: 'Failed to load comments.' });
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch comments" });
     }
 };
 
 exports.getCommentById = async (req, res) => {
-    const comment_id = req.params.id;
+    const comment_id = req.params.commentId;
     try {
         const comment = await Comment.getCommentById(comment_id);
         if (!comment) return res.status(404).json({ message: `comment ${identifier} does not exist.` });
@@ -35,7 +47,7 @@ exports.createComment = async (req, res) => {
 };
 
 exports.softDeleteCommentById = async (req, res) => {
-    const comment_id = req.params.id;
+    const comment_id = req.params.commentId;
     try {
         const comment = await Comment.softDeleteCommentById(comment_id);
         if (!comment) return res.status(404).json({ message: `comment ${identifier} does not exist.` });

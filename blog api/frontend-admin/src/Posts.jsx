@@ -6,10 +6,13 @@ export async function loader() {
   if (!res.ok) throw new Error(`Response status: ${res.status}`);
   
   const posts = await res.json();
-    const postsWithAuthors = await Promise.all(posts.map(async (post) => {
+  const postsWithAuthors = await Promise.all(posts.map(async (post) => {
         const authRes = await fetch(`http://localhost:5000/api/users/${post.author_id}`);
         const author = await authRes.json();
-    return { ...post, authorName: author };
+        const commentsRes = await fetch(`http://localhost:5000/api/posts/${post.id}/comments`);
+        const comments = await commentsRes.json();
+        const numComments = comments.length;
+    return { ...post, authorName: author, numComments };
     }));
 
   return postsWithAuthors;

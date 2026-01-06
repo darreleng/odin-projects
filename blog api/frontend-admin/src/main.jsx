@@ -5,7 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Posts, { loader as postsLoader } from './Posts.jsx'
 import Signup from './Signup.jsx'
-import PostPage from './PostPage.jsx';
+import PostPage, { loader as postLoader } from './PostPage.jsx';
 import NotFound from '../NotFound.jsx';
 
 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       { index: true, Component: Posts, loader: postsLoader },
       { path: "signup", Component: Signup },
       { path: "posts", Component: Posts, loader: postsLoader },
-      { path: "posts/:id", Component: PostPage},
+      { path: "posts/:id", Component: PostPage, loader: postLoader },
       { path: "*", Component: NotFound }
     ]
   }

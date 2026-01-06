@@ -11,7 +11,7 @@ exports.getAllPosts = async (req, res) => {
 };
 
 exports.getPostById = async (req, res) => {
-    const post_id = req.params.id;
+    const post_id = req.params.postId;
     try {
         const post = await Post.getPostById(post_id);
         if (!post) return res.status(404).json({ message: `Post id: ${post_id} does not exist.` });
@@ -34,7 +34,7 @@ exports.createPost = async (req, res) => {
 };
 
 exports.softDeletePostById = async (req, res) => {
-    const post_id = req.params.id;
+    const post_id = req.params.postId;
     const user_id = req.user.id;
     try {
         const post = await Post.getPostById(post_id);

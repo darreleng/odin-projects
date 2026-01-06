@@ -1,7 +1,7 @@
 import formatDate from './utils/formatDate';
 import { Link } from "react-router";
 
-export default function Post({ title, content, id, authorName, created_at }) {
+export default function Post({ title, id, authorName, created_at, numComments }) {
   const formattedDate = formatDate(created_at);
 
   return (
@@ -11,8 +11,7 @@ export default function Post({ title, content, id, authorName, created_at }) {
       <h2 className="title">
         <Link to={`/posts/${id}`}>{title}</Link>
       </h2>
-      <p>{content}</p>
-      <p className="comments">Comments</p>
+      <p className="comments">Comments ({numComments})</p>
     </li>
   );
 }
