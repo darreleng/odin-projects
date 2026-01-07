@@ -24,6 +24,9 @@ export default function PostPage() {
             <p>By: {author}</p>
             <p>Posted on {formattedDate}</p>
             <p>{post.content}</p>
+            <div className="postpage-comments">
+                
+            </div>
         </article>
     )
 }

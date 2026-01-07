@@ -7,7 +7,6 @@ exports.createPost = async (title, content, authorId) => {
 }
 
 exports.getAllPosts = async () => {
-    // const { rows } = await db.query('SELECT * FROM posts WHERE deleted_at IS NULL ORDER BY created_at DESC');
     const query = 'SELECT p.id, p.title, p.created_at, u.username FROM posts p LEFT JOIN users u ON p.author_id = u.id WHERE p.deleted_at IS NULL ORDER BY p.created_at DESC';
     const { rows } = await db.query(query);
     return rows;
