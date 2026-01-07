@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router";
 import './index.css'
 import App from './App.jsx'
 import Posts, { loader as postsLoader } from './Posts.jsx'
-import Signup from './Signup.jsx'
+import Login, { action as loginAction } from './Login.jsx'
 import PostPage, { loader as postLoader } from './PostPage.jsx';
 import NotFound from '../NotFound.jsx';
 
@@ -15,8 +15,7 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       { index: true, element: <Navigate to="posts" replace/>},
-      // { index: true, Component: Posts, loader: postsLoader },
-      { path: "signup", Component: Signup },
+      { path: "login", Component: Login, action: loginAction },
       { path: "posts", Component: Posts, loader: postsLoader },
       { path: "posts/:id", Component: PostPage, loader: postLoader },
       { path: "*", Component: NotFound }

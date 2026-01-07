@@ -9,7 +9,7 @@ export default function Navbar() {
                     <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/signup">Sign up</NavLink>
+                    <NavLink to="/login">Log in/Sign up</NavLink>
                 </li>
             </ul>
         </nav>
