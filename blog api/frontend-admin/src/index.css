@@ -42,15 +42,17 @@
 
 .navbar {
   background-color: var(--secondary-color);
-  padding: 16px;
+  padding: 8px;
   margin-bottom: 12px;
   border-radius: 12px;
 }
 
 .nav-links {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 0px 0px 0px 64px;
   list-style: none;
+  align-items: center;
 }
 
 .nav-links a.active {
@@ -87,6 +89,13 @@
 }
 
 .posts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comments {
   list-style: none;
   display: flex;
   flex-direction: column;

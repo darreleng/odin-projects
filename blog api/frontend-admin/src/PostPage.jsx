@@ -10,12 +10,16 @@ export async function loader({ params }) {
     const authorRes = await fetch(`http://localhost:5000/api/users/${post.author_id}`);
     const author = authorRes.json();
 
-    return { post, author };
+    const commentsRes = await fetch(`http://localhost:5000/api/posts/${params.id}/comments`);
+    const comments = await commentsRes.json();
+
+    // console.log(comments)
+
+    return { post, author, comments };
 }
 
 export default function PostPage() {
-    const { post, author } = useLoaderData();
-
+    const { post, author, comments } = useLoaderData();
     const formattedDate = formatDate(post.created_at);
 
     return (
@@ -24,9 +28,15 @@ export default function PostPage() {
             <p>By: {author}</p>
             <p>Posted on {formattedDate}</p>
             <p>{post.content}</p>
-            <div className="postpage-comments">
-                
-            </div>
+            <ul className="comments">
+                {comments.map(comment => (
+                    <li>
+                        {comment.username}
+                        {formatDate(comment.created_at)}
+                        {comment.text}
+                    </li>
+                ))}
+            </ul>
         </article>
     )
 }

@@ -12,9 +12,11 @@ export default function Navbar() {
                     <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    {user ? <Form method="post" action="/logout"><button>Log out</button></Form> : <NavLink to="/login">Log in/Sign up</NavLink>}
+                    {user ? <p className="hello">Hello, {user.username}!</p> : null }
                 </li>
-                {user ? <p className="hello">Hello, {user.username}!</p> : null }
+                <li>
+                    {user ? <Form method="post" action="/logout"><button>Log out</button></Form> : <NavLink to="/login"><button>Log in/Sign up</button></NavLink>}
+                </li>
                 
             </ul>
         </nav>

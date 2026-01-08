@@ -21,7 +21,7 @@ export async function action({ request }) {
 }
 
 export default function Login() {
-    const actionDate = useActionData();
+    const actionData = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === "submitting";
 
@@ -38,6 +38,7 @@ export default function Login() {
                     <input type="password" name="password" required />
                 </label>
                 <button type="submit" disabled={isSubmitting}>Submit</button>
+                {actionData ? <p>{actionData.error}</p> : null}
             </Form>
         </div>
 

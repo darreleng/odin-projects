@@ -19,10 +19,10 @@ exports.login = async (req, res) => {
 
     try {
         const user = await User.getUser(username); 
-        if (!user) return res.status(401).json({ error: `${username} does not exist.` });
+        if (!user) return res.status(401).json({ error: `Username "${username}" does not exist.` });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ error: "Invalid password" });
+        if (!isMatch) return res.status(401).json({ error: "Invalid password." });
 
         const token = jwt.sign(
             { id: user.id, username: user.username },
