@@ -58,6 +58,10 @@
   border-bottom: 2px solid #323acc;
 }
 
+.hello {
+  color: var(--primary-color);
+}
+
 .post{
   background-color: var(--secondary-color);
   color: var(--primary-color);

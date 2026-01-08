@@ -47,3 +47,18 @@ exports.logout = (req, res) => {
     res.clearCookie('token');
     res.json({ message: "Logged out successfully" });
 };
+
+exports.getMe = (req, res) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ id: decoded.id, username: decoded.username });
+    } catch (error) {
+        res.status(401).json({ error: 'Invalid or expired token' });
+    }
+}

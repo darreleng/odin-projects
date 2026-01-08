@@ -1,6 +1,9 @@
-import { NavLink } from "react-router"
+import { Form, NavLink } from "react-router"
+import { useRouteLoaderData } from "react-router"
 
 export default function Navbar() {
+
+    const { user } = useRouteLoaderData("root");
 
     return (
         <nav className="navbar">
@@ -9,8 +12,10 @@ export default function Navbar() {
                     <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/login">Log in/Sign up</NavLink>
+                    {user ? <Form method="post" action="/logout"><button>Log out</button></Form> : <NavLink to="/login">Log in/Sign up</NavLink>}
                 </li>
+                {user ? <p className="hello">Hello, {user.username}!</p> : null }
+                
             </ul>
         </nav>
 
